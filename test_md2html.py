@@ -2,6 +2,14 @@ from md2html import *
 
 # convert_emphasis() tests
 # ======
+def test_convert_emphasis_1(): # Normal case (double asteriks)
+    assert convert_emphasis("all that glitters is **not** gold") == "all that glitters is <strong>not</strong> gold"
+
+def test_convert_emphasis_2(): # Normal case (double underscore + single underscore)
+    assert convert_emphasis("This text is ___really important___.") == "This text is <em><strong>really important</strong></em>."
+
+def test_convert_emphasis_3(): # Edge case (invalid emphasis)
+    assert convert_emphasis("all that g__litters__ is not g__o__ld") == "all that g__litters__ is not g__o__ld"
 
 # convert_paragraph() tests
 # ======
@@ -38,6 +46,11 @@ def test_convert_heading_7(): # Edge case (Invalid underline for H2)
 
 # convert_unordered_list() tests
 # ======
+def test_convert_ul_1(): # Normal case (with *)
+    assert convert_unordered_list("* Item 1\n* Item 2") == "<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n</ul>"
+
+def test_convert_ul_2(): # Edge case (no space after *)
+    assert convert_unordered_list("*NoSpace") == "<ul>\n\n</ul>"
 
 # convert_code() tests
 # ======
