@@ -13,6 +13,10 @@ def test_convert_emphasis_3(): # Edge case (invalid emphasis)
 
 # convert_paragraph() tests
 # ======
+def test_convert_paragraph_1(): # Normal case
+    assert (convert_paragraph("This is a single line.\nIt is the first paragraph in this example.") == "<p>This is a single line.<br>It is the first paragraph in this example.</p>")
+
+
 
 # convert_headings() tests
 # ======
@@ -32,18 +36,18 @@ def test_convert_heading_5(): # Edge case (No space after #)
     assert convert_headings("#Nothing") == "#Nothing"
 
 def test_convert_heading_6(): # Edge case (Not at start of line)
-    text = "Incorrect # Heading"
-
-    assert convert_headings(text) == text
+    assert convert_headings("Incorrect # Heading") == "Incorrect # Heading"
 
 def test_convert_heading_7(): # Edge case (Invalid underline for H2)
-    text = "Heading 2\n-"
-
-    assert convert_headings(text) == text
+    assert convert_headings("Heading 2\n-") == "Heading 2\n-"
 
 # convert_ordered_list() tests
 # ======
+def test_convert_ol_1(): # Normal case
+    assert convert_ordered_list("1. First item\n2. Second item\n3. Third item") == "<ol>\n<li>First item</li>\n<li>Second item</li>\n<li>Third item</li>\n</ol>"
 
+def test_convert_ol_2(): # Edge case (no space after number)
+    assert convert_ordered_list("1.First") == "<ol>\n\n</ol>"
 # convert_unordered_list() tests
 # ======
 def test_convert_ul_1(): # Normal case (with *)
