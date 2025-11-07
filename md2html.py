@@ -35,13 +35,13 @@ def convert_headings(text: str) -> str:
 
     return text
 
-orderedPattern = re.compile(r"^[0-9]+\. (.*)$")
+convertOrderedPattern = re.compile(r"^[0-9]+\. (.*)$")
 def convert_ordered_list(text: str) -> str:
     lines = text.split('\n')
     items = []
 
     for line in lines:
-        match = orderedPattern.match(line)
+        match = convertOrderedPattern.match(line)
 
         if match:
             matchGroup = match.group(1)
@@ -54,13 +54,13 @@ def convert_ordered_list(text: str) -> str:
     
     return f"<ol>\n" + "\n".join(items) + "\n</ol>"
 
-unorderedPattern = re.compile(r"^[*\-+] (.*)$")
+convertUnorderedPattern = re.compile(r"^[*\-+] (.*)$")
 def convert_unordered_list(text: str) -> str:
     lines = text.split('\n')
     items = []
 
     for line in lines:
-        match = unorderedPattern.match(line)
+        match = convertUnorderedPattern.match(line)
 
         if match:
             matchGroup = match.group(1)
@@ -88,15 +88,15 @@ def convert(text: str) -> str:
     for block in blocks:
         block = block.strip()
         
-        converted_heading = convert_headings(block)
-        if converted_heading != block:
-            htmlArr.append(converted_heading)
+        heading = convert_headings(block)
+        if heading != block:
+            htmlArr.append(heading)
             continue
 
         firstLine = block.split('\n')[0]
-        if unorderedPattern.match(firstLine):
+        if convertUnorderedPattern.match(firstLine):
             htmlArr.append(convert_unordered_list(block))
-        elif orderedPattern.match(firstLine):
+        elif convertOrderedPattern.match(firstLine):
             htmlArr.append(convert_ordered_list(block))
         else:
             htmlArr.append(convert_paragraph(block))
