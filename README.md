@@ -1,7 +1,6 @@
-conda activate md2html-env
 # Markdown to HTML Converter | CSE 337 Assignment 2
 ## Limitations
-As according to the assignment, the script follows the following limitations:
+As according to the assignment document, the script follows the following limitations:
 - Block elements like headings, lists, and paragraphs are separated by at least one blank line, signified by `\n\n` in markdown
 - Both ordered and unordered lists have a two space indent for each list item
 - Lists can't have other lists or block elements
