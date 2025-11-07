@@ -50,7 +50,7 @@ def convert_ordered_list(text: str) -> str:
             output = convert_link(output)
             output = convert_emphasis(output)
 
-            items.append(f"<li>{output}</li>")
+            items.append(f"  <li>{output}</li>")
     
     return f"<ol>\n" + "\n".join(items) + "\n</ol>"
 
@@ -69,7 +69,7 @@ def convert_unordered_list(text: str) -> str:
             output = convert_link(output)
             output = convert_emphasis(output)
 
-            items.append(f"<li>{output}</li>")
+            items.append(f"  <li>{output}</li>")
     
     return f"<ul>\n" + "\n".join(items) + "\n</ul>"
 
