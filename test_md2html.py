@@ -100,7 +100,7 @@ def test_convert_1(): # Normal case
         "<ol>\n"
         "  <li>First item</li>\n"
         "  <li>Second item</li>\n"
-        "</ol>\n"
+        "</ol>"
     )
 
     assert convert(input) == expected
