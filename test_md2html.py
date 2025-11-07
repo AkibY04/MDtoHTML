@@ -16,8 +16,6 @@ def test_convert_emphasis_3(): # Edge case (invalid emphasis)
 def test_convert_paragraph_1(): # Normal case
     assert (convert_paragraph("This is a single line.\nIt is the first paragraph in this example.") == "<p>This is a single line.<br>It is the first paragraph in this example.</p>")
 
-
-
 # convert_headings() tests
 # ======
 def test_convert_heading_1(): # Normal case (H1 with #)
@@ -74,3 +72,22 @@ def test_convert_link_1(): # Normal case
 
 # convert() tests
 # ======
+def test_convert_1():
+    assert convert("### Hello!\n\nThis is a paragraph!") == "<h3>Hello!</h3>\n<p>This is a paragraph!</p>"
+
+# def test_convert_integration_complex():
+#     md = "# Title\n\nIntro paragraph with **bold**.\n\n* List item 1\n* List item 2\n\n## Subheading\n\nAnother paragraph."
+#     expected = (
+#         "<h1>Title</h1>\n"
+#         "<p>Intro paragraph with <strong>bold</strong>.</p>\n"
+#         "<ul>\n<li>List item 1</li>\n<li>List item 2</li>\n</ul>\n"
+#         "<h2>Subheading</h2>\n"
+#         "<p>Another paragraph.</p>"
+#     )
+#     assert convert(md) == expected
+
+# def test_convert_integration_edge_empty_lines():
+#     # Multiple blank lines should be treated as a single split
+#     md = "Para 1.\n\n\n\nPara 2."
+#     expected = "<p>Para 1.</p>\n<p>Para 2.</p>"
+#     assert convert(md) == expected
