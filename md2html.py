@@ -38,40 +38,51 @@ def convert_headings(text: str) -> str:
 convertOrderedPattern = re.compile(r"^[0-9]+\. (.*)$")
 def convert_ordered_list(text: str) -> str:
     lines = text.split('\n')
-    items = []
-
+    liBlocks = []
+    
     for line in lines:
         match = convertOrderedPattern.match(line)
 
         if match:
-            matchGroup = match.group(1)
+            liBlocks.append(match.group(1))
+        elif liBlocks:
+            liBlocks[-1] += "\n" + line
 
-            output = convert_code(matchGroup)
-            output = convert_link(output)
-            output = convert_emphasis(output)
+    htmlArr = []
+    for content_block in liBlocks:
+        output = convert_code(content_block)
+        output = convert_link(output)
+        output = convert_emphasis(output)
+        
+        output = output.replace('\n', '<br>')
+        
+        htmlArr.append(f"  <li>{output}</li>")
 
-            items.append(f"  <li>{output}</li>")
-    
-    return f"<ol>\n" + "\n".join(items) + "\n</ol>"
+    return f"<ol>\n" + "\n".join(htmlArr) + "\n</ol>"
 
 convertUnorderedPattern = re.compile(r"^[*\-+] (.*)$")
 def convert_unordered_list(text: str) -> str:
     lines = text.split('\n')
-    items = []
-
+    liBlocks = []
+    
     for line in lines:
         match = convertUnorderedPattern.match(line)
-
         if match:
-            matchGroup = match.group(1)
+            liBlocks.append(match.group(1))
+        elif liBlocks:
+            liBlocks[-1] += "\n" + line
+            
+    htmlArr = []
+    for content_block in liBlocks:
+        output = convert_code(content_block)
+        output = convert_link(output)
+        output = convert_emphasis(output)
+        
+        output = output.replace('\n', '<br>')
+        
+        htmlArr.append(f"  <li>{output}</li>")
 
-            output = convert_code(matchGroup)
-            output = convert_link(output)
-            output = convert_emphasis(output)
-
-            items.append(f"  <li>{output}</li>")
-    
-    return f"<ul>\n" + "\n".join(items) + "\n</ul>"
+    return f"<ul>\n" + "\n".join(htmlArr) + "\n</ul>"
 
 convertCodePattern = re.compile(r"(``|`)(.*?)\1")
 def convert_code(text: str) -> str:
@@ -101,7 +112,8 @@ def convert(text: str) -> str:
         else:
             htmlArr.append(convert_paragraph(block))
             
-    return "\n".join(htmlArr)
+    return "\n".join(htmlArr).rstrip("\n")
+
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
